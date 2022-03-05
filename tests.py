@@ -1,8 +1,8 @@
 import unittest
 import os
 
-import scraper_options_lists as options_lists
-import scraper_reports as reports_list
+import web_scrappers.scraper_options_lists as options_lists
+import web_scrappers.scraper_reports as reports_list
 
 
 class TestScraperContentTypes(unittest.TestCase):

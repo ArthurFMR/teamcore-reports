@@ -75,7 +75,8 @@ def _get_file_info(index, element):
 def download_report_file(url):
     file_name = _get_file_name_from_url(url)
 
-    root_dir = os.path.dirname(os.path.abspath(__file__))
+    root_dir = os.path.abspath(os.curdir) # Get root project directory
+    # Root to reports directory with file name
     reports_path = os.path.join(root_dir, 'reports/' + file_name)
     
     urlretrieve(url, reports_path)
