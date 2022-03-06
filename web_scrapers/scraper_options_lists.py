@@ -9,12 +9,14 @@ from bs4 import BeautifulSoup
 
 import utils
 
+URL = "https://www.datosabiertos.gob.pe"
 
-def get_content_types_list(url):
+
+def get_content_types_list():
     ul_id = "facetapi-facet-search-apidatasets-block-type"
 
     # Storing content types with theirs info(name, url)
-    content_types_info = _iterate_ul_elements(url, ul_id, sep="(")
+    content_types_info = _iterate_ul_elements(URL, ul_id, sep="(")
 
     return content_types_info
 

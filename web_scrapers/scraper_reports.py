@@ -1,7 +1,10 @@
-import os
+import re
 import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
+from zipfile import ZipFile
+import os
+
 
 import utils
 
@@ -74,23 +77,53 @@ def _get_file_info(index, element):
 
 def download_report_file(url):
     file_name = _get_file_name_from_url(url)
+    file_ext = _get_ext_from_file_name(file_name)
 
-    root_dir = os.path.abspath(os.curdir) # Get root project directory
-    # Root to reports directory with file name
-    reports_path = os.path.join(root_dir, 'reports/' + file_name)
-    
-    urlretrieve(url, reports_path)
+    # path to reports directory with file name
+    reports_path_file = utils.create_path('reports/', file_name)
+
+    # download file given specific url
+    # and store it in reports folder
+    urlretrieve(url, reports_path_file)
+
+    downloaded_files_names = []
+
+    if file_ext == "zip":
+        # Maybe the zip contains multiple files
+        unziped_file_names = _unzip_file(reports_path_file)
+        downloaded_files_names = unziped_file_names
+        utils.remove_file(reports_path_file)
+    else:
+        # if the file downloaded is not zip
+        # add original name file
+        downloaded_files_names.append(file_name)
+
+    downloaded_files_names = utils.create_indexed_list(downloaded_files_names)
+
+    return downloaded_files_names
 
 
-def _get_file_name_from_url(url:str):
+def _get_file_name_from_url(url: str):
     name = url.split('/')[-1]
     return name
 
+
+def _unzip_file(path_file):
+    root_dir = os.path.abspath(os.curdir)  # Get project root path
+    reports_path = os.path.join(root_dir, 'reports')
+
+    with ZipFile(path_file, 'r') as zip_file:
+        zip_file.extractall(reports_path)
+        file_names = zip_file.namelist()
+        return file_names
+
+
+def _get_ext_from_file_name(file_name: str):
+    ext = file_name.split('.')[-1]
+    return ext
+
+
 if __name__ == '__main__':
     pass
-    # url = "https://www.datosabiertos.gob.pe/search/field_resources%253Afield_format/csv-14/field_topic/econom%C3%ADa-y-finanzas-29/type/dataset?query=&sort_by=changed"
-    # get_reports_titles(url)
-    # url = "https://www.datosabiertos.gob.pe/dataset/donaciones-covid-19-ministerio-de-econom%C3%ADa-y-finanzas-mef"
-    # get_files_info(url)
     url = "https://www.datosabiertos.gob.pe/sites/default/files/pcm_donaciones.zip"
     download_report_file(url)

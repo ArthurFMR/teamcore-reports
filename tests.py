@@ -1,8 +1,9 @@
 import unittest
 import os
 
-import web_scrappers.scraper_options_lists as options_lists
-import web_scrappers.scraper_reports as reports_list
+import web_scrapers.scraper_options_lists as options_lists
+import web_scrapers.scraper_reports as reports_list
+import utils
 
 
 class TestScraperContentTypes(unittest.TestCase):
@@ -88,11 +89,11 @@ class TestScraperReportsInfo(unittest.TestCase):
         self.assertIn('number', result)
         self.assertIn('name', result)
         self.assertIn('url', result)
-    
+
     def test_list_len_with_query(self):
         query = "donaciones"
         url_query = f"https://www.datosabiertos.gob.pe/search/field_resources%253Afield_format/csv-14/field_topic/econom%C3%ADa-y-finanzas-29/type/dataset?query={query}&sort_by=changed"
-        
+
         result = reports_list.get_reports_titles(url_query)
         elements_number = len(result)
 
@@ -120,24 +121,24 @@ class TestScraperReportFilesInfo(unittest.TestCase):
         self.assertIn('number', result)
         self.assertIn('name', result)
         self.assertIn('url', result)
-    
+
     def test_download_report_file(self):
         file_url = "https://www.datosabiertos.gob.pe/sites/default/files/pcm_donaciones.zip"
 
-        reports_list.download_report_file(file_url)
+        downloaded_files = reports_list.download_report_file(file_url)
 
-        file_name = reports_list._get_file_name_from_url(file_url)
+        self.assertEqual(len(downloaded_files), 1)
 
-        root_dir = os.path.dirname(os.path.abspath(__file__))
-        reports_path = os.path.join(root_dir, 'reports\\' + file_name)
+        # Check if the file downloaded exists
+        file_name = downloaded_files[0]
+        self.assertEqual(file_name, 'pcm_donaciones.csv')
 
-        result = os.path.exists(reports_path)
+        file_path = utils.create_path('reports/', file_name)
+        file_exist = os.path.exists(file_path)
+        self.assertTrue(file_exist)
 
-        self.assertTrue(result)
+        utils._remove_file(file_path)
 
-        if result:
-            os.remove(reports_path)
-    
 
 if __name__ == '__main__':
     unittest.main()
