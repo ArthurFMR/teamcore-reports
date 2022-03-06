@@ -32,4 +32,4 @@
 
 ## Result
 After the process finishs, in the reports folder inside of the project we can see the report file downloaded and inside of the folder that start with region are the reports file divide by REGION
-![reports files]((https://drive.google.com/uc?export=view&id=1cBmWi8eHHHjDI0ZQp5HEeFs0yKTuuBTT)
+![reports files](https://drive.google.com/uc?export=view&id=1cBmWi8eHHHjDI0ZQp5HEeFs0yKTuuBTT)
