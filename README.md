@@ -29,3 +29,7 @@
 
 9. Then it shows the files downloaded. The file selected in the step before is zip file, but the app manage that for you, no you should selected the file you want to divide base on REGION
 ![Select file downloaded](https://drive.google.com/uc?export=view&id=1mcGTS-X6u2j5-bQOx_QJVly34PQsnBUU)
+
+## Result
+After the process finishs, in the reports folder inside of the project we can see the report file downloaded and inside of the folder that start with region are the reports file divide by REGION
+![reports files]((https://drive.google.com/uc?export=view&id=1cBmWi8eHHHjDI0ZQp5HEeFs0yKTuuBTT)
