@@ -66,6 +66,5 @@ def set_select_file_for_filter_screen(downloaded_files):
     print("Opcion Incorrecta")
 
 
-
 if __name__ == '__main__':
     pass

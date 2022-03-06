@@ -1,5 +1,5 @@
-import options_screen
-import reports_screen
+import screens.options_screen as options_screen
+import screens.reports_screen as reports_screen
 import utils
 
 

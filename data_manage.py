@@ -1,6 +1,3 @@
-from importlib.resources import path
-from unittest import result
-from charset_normalizer import CharsetDetector
 import pandas as pd
 import chardet
 import os
@@ -17,16 +14,17 @@ def create_csvs_by_column_value(file_name, column_name):
     _create_folder_in_reports(destinition_dir_name)
 
     for value in unique_values:
-        report_name = value.lower() # lowercase report file 
+        report_name = value.lower()  # lowercase report file
         report_name = report_name + '.csv'
 
         filtered_df = _filter_df_by_column(df, column_name, value)
 
         destinition_dir_name = destinition_dir_name + "/"
-        file_path = utils.create_path("reports/" + destinition_dir_name, report_name)
+        file_path = utils.create_path(
+            "reports/" + destinition_dir_name, report_name)
 
         filtered_df.to_csv(file_path)
-    
+
 
 def _read_csv(file_name):
     file_path = utils.create_path('reports/', file_name)
@@ -37,13 +35,13 @@ def _read_csv(file_name):
     return df
 
 
-def _filter_df_by_column(df:pd.DataFrame, column_name, common_value):
+def _filter_df_by_column(df: pd.DataFrame, column_name, common_value):
     filtered_df = df.loc[df[column_name] == common_value]
 
     return filtered_df
 
 
-def _get_column_unique_values(df:pd.DataFrame, column_name:str):
+def _get_column_unique_values(df: pd.DataFrame, column_name: str):
     unique_values = df[column_name].unique()
     return unique_values
 
@@ -65,7 +63,6 @@ def _create_folder_in_reports(folder_name):
     if os.path.exists(dir_name) != True:
         os.mkdir(dir_name)
         return dir_name
-    
 
 
 if __name__ == '__main__':
@@ -75,4 +72,4 @@ if __name__ == '__main__':
     #print(_get_column_unique_values(df, 'REGION'))
 
     create_csvs_by_column_value(file_name, 'REGION')
-    #_create_folder_in_reports('region')
+    # _create_folder_in_reports('region')

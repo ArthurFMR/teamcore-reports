@@ -48,12 +48,12 @@ def general_screen(options):
     for option in options:
         number = option['number']
         name = option['name']
-   
+
         message = f"{number} - {name}"
         print(message)
 
 
-def search_option(number:int, options:list):
+def search_option(number: int, options: list):
     for option in options:
         if option['number'] == number:
             return option
@@ -65,12 +65,12 @@ def input_validation(input, options):
     return False
 
 
-def create_indexed_list(elements:list):
+def create_indexed_list(elements: list):
     indexed_list = []
     for index, el in enumerate(elements):
         indexed_el = {'number': index, 'name': el}
         indexed_list.append(indexed_el)
-    
+
     return indexed_list
 
 
